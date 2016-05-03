@@ -23,7 +23,7 @@ class Main:
         self.listPlayers = []
         self.p = getPlayers()
         self.count = 0
-
+        self.previous = ' '
 
     def getTurn(self):
         shooter = self.listPlayers[randint(0, len(self.listPlayers) - 1)]
@@ -41,16 +41,14 @@ class Main:
                 print(self.listPlayers[0].name + " ganhou o jogo")
                 self.gameEnd = True
             shooter, taker = self.getTurn()
+            while self.previous == shooter.name:
+                shooter, taker = self.getTurn()
             print(shooter.name + " atira em " + taker.name)
             turno = Atirador.atira(shooter, taker)
             print(taker.name + ' ' + str(turno))
             if taker.vida <= 0:
+                print(taker.name + ' morreu')
                 self.listPlayers.remove(taker)
             self.previous = shooter.name
-
-
-
-
-
 m = Main()
 m.loop()
